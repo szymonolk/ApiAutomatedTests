@@ -1,14 +1,10 @@
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
 public class PostRequestTests {
@@ -60,6 +56,20 @@ public class PostRequestTests {
                 .statusCode(400) // we can do smth like HttpStatus.SC_BAD_REQUEST
                 .body("error", equalTo("Missing password"));
 
+    }
+
+    @Test
+    public void loginSuccessfulAndReturnToken(){
+        requestBody.put("email", "eve.holt@reqres.in");
+        requestBody.put("password", "cityslicka");
+
+        given().contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .post("/api/login")
+                .then()
+                .statusCode(200)
+                .body("token", notNullValue());
     }
 
 }

@@ -8,12 +8,10 @@ import static org.hamcrest.Matchers.*;
 public class GetRequestTests {
 
 
-
     @BeforeAll
     static void setUp() {
         RestAssured.baseURI = "https://reqres.in";
     }
-
 
     @Test
     public void serverReturn200WithSingleUser() {
