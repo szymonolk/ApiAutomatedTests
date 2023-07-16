@@ -1,23 +1,25 @@
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.hamcrest.*;
+
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
 public class GetRequestTests {
 
+
+
     @BeforeAll
-    static void setUp(){
+    static void setUp() {
         RestAssured.baseURI = "https://reqres.in";
     }
 
 
     @Test
-    public void server_return_200_with_single_user() {
+    public void serverReturn200WithSingleUser() {
         when().
                 get("/api/users/2")
-        .then()
+                .then()
                 .statusCode(200)
                 .body("data.email", equalTo("janet.weaver@reqres.in"))
                 .body("data.first_name", equalTo("Janet"));
@@ -25,7 +27,7 @@ public class GetRequestTests {
     }
 
     @Test
-    public void server_return_list_of_users(){
+    public void serverReturnListOfUsers() {
         when().get("/api/users?page=2")
                 .then()
                 .statusCode(200)
@@ -34,7 +36,7 @@ public class GetRequestTests {
     }
 
     @Test
-    public void server_return_list_of_users_and_check_containing_elements(){
+    public void serverReturnListOfUsersAndCheckContainingElements() {
         when().get("/api/users?page=2")
                 .then()
                 .statusCode(200)
@@ -45,7 +47,7 @@ public class GetRequestTests {
     }
 
     @Test
-    public void server_return_list_of_users_and_check_email_format(){
+    public void serverReturnListOfUsersAndCheckEmailFormat() {
         when().get("/api/users?page=2")
                 .then()
                 .statusCode(200)
@@ -54,7 +56,7 @@ public class GetRequestTests {
     }
 
     @Test
-    public void check_avatar_is_not_null(){
+    public void checkAvatarIsNotNull() {
         when().get("/api/users?page=2")
                 .then()
                 .statusCode(200)
@@ -62,11 +64,11 @@ public class GetRequestTests {
     }
 
     @Test
-    public void check_id_is_integer(){
+    public void checkIdIsInteger() {
         when().get("/api/users?page=2")
                 .then()
                 .statusCode(200)
                 .body("data.id", everyItem(instanceOf(Integer.class)));
-    }
 
+    }
 }
